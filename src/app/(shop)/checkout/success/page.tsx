@@ -4,6 +4,8 @@ import { CheckCircle2, Package, ShoppingBag, Home } from "lucide-react";
 import { db } from "@/lib/db";
 import { formatPrice, formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   searchParams: { orderId?: string };
 }

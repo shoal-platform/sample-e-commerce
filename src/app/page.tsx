@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 import { parseProductImages, parseProductColors, parseProductSizes } from "@/lib/utils";
 import type { Product, Category } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 async function getFeaturedProducts(): Promise<Product[]> {
   const rawProducts = await db.product.findMany({
     where: { featured: true, isActive: true },

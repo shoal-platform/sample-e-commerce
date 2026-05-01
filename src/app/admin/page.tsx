@@ -9,6 +9,8 @@ import {
   TrendingDown,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 async function getAdminStats() {
   const [
     totalRevenue,

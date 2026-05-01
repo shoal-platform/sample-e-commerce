@@ -3,6 +3,8 @@ import { parseProductImages } from "@/lib/utils";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { AdminProductsClient } from "@/components/admin/AdminProductsClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminProductsPage() {
   const [rawProducts, categories] = await Promise.all([
     db.product.findMany({

@@ -12,6 +12,8 @@ import { formatPrice, getDiscountPercentage } from "@/lib/utils";
 import { Truck, Shield, RotateCcw, Package } from "lucide-react";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 interface Props {
   params: { id: string };
 }

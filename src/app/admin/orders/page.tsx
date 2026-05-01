@@ -2,6 +2,8 @@ import { db } from "@/lib/db";
 import { formatPrice, formatDate } from "@/lib/utils";
 import { AdminOrdersClient } from "@/components/admin/AdminOrdersClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminOrdersPage() {
   const orders = await db.order.findMany({
     include: {

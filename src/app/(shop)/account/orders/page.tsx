@@ -9,6 +9,8 @@ import { formatPrice, formatDate } from "@/lib/utils";
 import { Package, Eye } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const statusColors: Record<string, string> = {
   PENDING: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
   PROCESSING: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",

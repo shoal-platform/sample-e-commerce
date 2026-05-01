@@ -8,6 +8,8 @@ import { db } from "@/lib/db";
 import { parseProductImages, parseProductColors, parseProductSizes } from "@/lib/utils";
 import type { Product, ProductFilters as Filters } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 interface SearchParams {
   search?: string;
   category?: string;

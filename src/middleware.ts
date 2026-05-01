@@ -1,14 +1,17 @@
-import { auth } from "@/lib/auth";
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const session = await auth();
+  const token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  });
   const { pathname } = request.nextUrl;
 
   // Protect /account routes
   if (pathname.startsWith("/account")) {
-    if (!session) {
+    if (!token) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
@@ -17,19 +20,19 @@ export async function middleware(request: NextRequest) {
 
   // Protect /admin routes
   if (pathname.startsWith("/admin")) {
-    if (!session) {
+    if (!token) {
       const loginUrl = new URL("/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
     }
-    if (session.user.role !== "ADMIN") {
+    if (token.role !== "ADMIN") {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }
 
   // Redirect authenticated users away from auth pages
   if (pathname === "/login" || pathname === "/register") {
-    if (session) {
+    if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
   }

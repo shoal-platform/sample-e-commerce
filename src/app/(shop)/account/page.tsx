@@ -6,6 +6,8 @@ import { ProfileForm } from "@/components/account/ProfileForm";
 import { User, Mail, Calendar } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default async function AccountPage() {
   const session = await auth();
   if (!session) redirect("/login");
