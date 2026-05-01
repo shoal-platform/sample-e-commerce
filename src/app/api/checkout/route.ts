@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getShippingCost, calculateOrderTotal } from "@/lib/utils";
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     const { tax, total } = calculateOrderTotal(subtotal, shippingCost);
 
     // Create payment intent with Stripe
+    const stripe = getStripe();
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(total * 100), // Stripe uses cents
       currency: "usd",
@@ -105,6 +106,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Invalid checkout data", details: error.errors },
         { status: 400 }
+      );
+    }
+    if (
+      error instanceof Error &&
+      error.message === "STRIPE_SECRET_KEY is not configured"
+    ) {
+      return NextResponse.json(
+        { error: "Stripe is not configured" },
+        { status: 500 }
       );
     }
     console.error("Checkout error:", error);

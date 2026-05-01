@@ -1,9 +1,17 @@
 import Stripe from "stripe";
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
-  apiVersion: "2025-02-24.acacia",
-  typescript: true,
-});
+export function getStripe() {
+  const apiKey = process.env.STRIPE_SECRET_KEY;
+
+  if (!apiKey) {
+    throw new Error("STRIPE_SECRET_KEY is not configured");
+  }
+
+  return new Stripe(apiKey, {
+    apiVersion: "2025-02-24.acacia",
+    typescript: true,
+  });
+}
 
 export const getStripeJs = async () => {
   const { loadStripe } = await import("@stripe/stripe-js");
